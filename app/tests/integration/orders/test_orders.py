@@ -3,7 +3,6 @@ from uuid import uuid1
 
 
 def test_get_orders(testClient):
-
     response = testClient.get("/orders")
 
     assert not len(response.json())
@@ -28,5 +27,4 @@ def test_make_order(testClient, database):
     response = testClient.post("/orders", json=test_order)
 
     assert response.status_code == HTTPStatus.CREATED
-
     assert database.orders.find_one({"id": orderId})

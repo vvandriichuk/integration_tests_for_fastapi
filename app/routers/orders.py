@@ -2,16 +2,15 @@ from http import HTTPStatus
 from fastapi import APIRouter, Depends
 from app.db.db import getDB
 from app.models.models import Order
-from app.schemas.order import ordersEntity
+from app.schemas.order import orders_entity
 
 ordersRouter = APIRouter()
 
 
 @ordersRouter.get("/orders", status_code=HTTPStatus.OK)
-def get_all_orders(db=Depends(getDB)):
-
+def get_orders(db=Depends(getDB)):
     orders = db.orders.find()
-    return ordersEntity(orders)
+    return orders_entity(orders)
 
 
 @ordersRouter.post("/orders", status_code=HTTPStatus.CREATED)

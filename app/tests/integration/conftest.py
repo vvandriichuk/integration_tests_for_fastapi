@@ -8,7 +8,7 @@ from app.db.db import getDB
 
 
 def override_get_db():
-    client = MongoClient("mongodb://localhost:27017/")
+    client = MongoClient()
     try:
         db = client.get_database("test_db")
         yield db
@@ -16,15 +16,16 @@ def override_get_db():
         client.close()
 
 
-@pytest.fixture(scope="session")
-def database():
-    return MongoClient("mongodb://localhost:27017/").get_database("test_db")
-
-
-def _resetDatabase(db):
+def reset_database(db):
+    """Clear database after each test."""
     for name in db.list_collection_names():
         collection = db.get_collection(name)
         collection.delete_many({})
+
+
+@pytest.fixture(scope="session")
+def database():
+    return MongoClient().get_database("test_db")
 
 
 @pytest.fixture(scope="session")
@@ -32,5 +33,5 @@ def testClient(database):
     with TestClient(app) as client:
         app.dependency_overrides[getDB] = override_get_db
         yield client
-        _resetDatabase(database)
+        reset_database(database)
         app.dependency_overrides = {}

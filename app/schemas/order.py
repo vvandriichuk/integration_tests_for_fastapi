@@ -1,10 +1,15 @@
 from typing import Dict, List
 
-def orderEntity(item) -> Dict:
+
+def order_entity(item: Dict) -> Dict:
     return {
         "id": str(item["_id"]),
+        "external_id": item["id"],
+        "items": item["items"],
+        "status": item["status"],
+        "total_price": item["total_price"],
     }
 
 
-def ordersEntity(entity) -> List[Dict]:
-    return [orderEntity(i) for i in entity]
+def orders_entity(entity) -> List[Dict]:
+    return [order_entity(i) for i in entity]
