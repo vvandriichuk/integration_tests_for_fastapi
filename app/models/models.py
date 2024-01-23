@@ -1,18 +1,21 @@
 from pydantic import BaseModel
-from typing import List, Optional
+
+
+class OrderStatus:
+    NEW: str = "NEW"
+    PROCESSING: str = "PROCESSING"
+    DONE: str = "DONE"
 
 
 class Item(BaseModel):
-
     title: str
-    description: Optional[str]
+    description: str | None
     quantity: int
     price: float
 
 
 class Order(BaseModel):
-
     id: str
     status: str
-    items: List[Item]
+    items: list[Item]
     total_price: float

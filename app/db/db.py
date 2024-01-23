@@ -1,6 +1,7 @@
 from pymongo import MongoClient
+from pymongo.database import Database
 
 
-def getDB():
+def get_db() -> Database:
     client = MongoClient()
     return client.get_database("config")

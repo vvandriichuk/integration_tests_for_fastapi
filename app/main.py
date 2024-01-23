@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 
-from app.routers.orders import ordersRouter
+from routers.orders import orders_router
 
 app = FastAPI()
 
-app.include_router(ordersRouter)
+app.include_router(orders_router)
 
 
 @app.get("/")
